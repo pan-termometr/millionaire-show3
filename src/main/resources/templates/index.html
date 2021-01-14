@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css" th:href="@{/css/index.css}">
+    <title>Milionerzy 2021</title>
+</head>
+<body>
+<div class="center">
+    <form action="#" th:action="@{/game}" method="post">
+<button class="center-button" th:name="newGame" th:value="'true'"><h1>Nowa gra</h1></button>
+    </form>
+    <form action="#" th:action="@{/add}" method="post">
+<button class="center-button"> <h1>Dodaj pytanie</h1></button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/css/add-question.css" th:href="@{/css/add-question.css}">
+    <title>Milionerzy 2021</title>
+</head>
+<body>
+<div class="center">
+    <h1>Dodaj nowe pytanie</h1>
+    <form action="#" method="post" th:action="@{/add-new-question}" th:object="${question}">
+        <p>Wartość pytania:
+            <select name="level" th:field="*{level}">
+                <option value="1">500 zł</option>
+                <option value="2">1 000 zł</option>
+                <option value="3">2 000 zł</option>
+                <option value="4">5 000 zł</option>
+                <option value="5">10 000 zł</option>
+                <option value="6">20 000 zł</option>
+                <option value="7">40 000 zł</option>
+                <option value="8">75 000 zł</option>
+                <option value="9">125 000 zł</option>
+                <option value="10">250 000 zł</option>
+                <option value="11">500 000 zł</option>
+                <option value="12">1 000 000 zł</option>
+            </select>
+        </p>
+        <p>Treść pytania: <input name="questionText" type="text" th:field="*{questionText}"/></p>
+        <p>Odpowiedź A: <input name="answerA" type="text" th:field="*{answerA}"/></p>
+        <p>Odpowiedź B: <input name="answerB" type="text" th:field="*{answerB}"/></p>
+        <p>Odpowiedź C: <input name="answerC" type="text" th:field="*{answerC}"/></p>
+        <p>Odpowiedź D: <input name="answerD" type="text" th:field="*{answerD}"/></p>
+        <p>Wybierz prawidłową odpowiedź:
+            <select name="correctAnswer" th:field="*{correctAnswer}">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </p>
+        <input type="submit" value="Dodaj" class="center-button"/>
+    </form>
+</div>
+</body>
+</html>

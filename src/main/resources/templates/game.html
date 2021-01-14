@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/css/game.css" th:href="@{/css/game.css}">
+    <script type="text/javascript" src="/js/game.js" th:src="@{/js/game.js}">    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Milionerzy 2021</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="left">
+
+            <div class="friendAnswer" id="friendAnswer"></div>
+
+            <div class="audienceAnswer" id="audienceAnswer">
+                <div class="singleAnswerContainer">
+                    <div class="singleAnswer" id="audienceAnswerA" name="audienceGraphAnswer"></div>
+                    <div class="singleAnswer" id="audienceAnswerB" name="audienceGraphAnswer"></div>
+                    <div class="singleAnswer" id="audienceAnswerC" name="audienceGraphAnswer"></div>
+                    <div class="singleAnswer" id="audienceAnswerD" name="audienceGraphAnswer"></div>
+                </div>
+                <div class="answersIdContainer">
+                    <div class="answerId"><h1>A</h1></div>
+                    <div class="answerId"><h1>B</h1></div>
+                    <div class="answerId"><h1>C</h1></div>
+                    <div class="answerId"><h1>D</h1></div>
+                </div>
+            </div>
+
+            <div class="question-and-answers-container">
+                <form action="#" id="form" method="post" th:action="@{/game}" th:object="${question}">
+                    <div class="question"><p th:text="*{questionText}"></p> </div>
+                    <input type="hidden" id="currentLevel" th:value="${question.level}"/>
+                    <input type="hidden" id="fifty" name="lifelineFiftyStatus" value="noUsed"/>
+                    <input type="hidden" id="phone" name="lifelinePhoneStatus" value="noUsed"/>
+                    <input type="hidden" id="audience" name="lifelineAudienceStatus" value="noUsed"/>
+                    <button type="button" class="answer" id="A" name="playerAnswer" th:data-parameter1="${question.correctAnswer}" onclick="checkAnswer(this.getAttribute('data-parameter1'), 'A')" th:text="${'A. ' } + *{answerA}" th:value="${'A. ' } + *{answerA}"></button>
+                    <button type="button" class="answer" id="B" name="playerAnswer" th:data-parameter1="${question.correctAnswer}" onclick="checkAnswer(this.getAttribute('data-parameter1'), 'B')" th:text="${'B. ' } + *{answerB}" th:value="${'B. ' } + *{answerB}"></button>
+                    <button type="button" class="answer" id="C" name="playerAnswer" th:data-parameter1="${question.correctAnswer}" onclick="checkAnswer(this.getAttribute('data-parameter1'), 'C')" th:text="${'C. ' } + *{answerC}" th:value="${'C. ' } + *{answerC}"></button>
+                    <button type="button" class="answer" id="D" name="playerAnswer" th:data-parameter1="${question.correctAnswer}" onclick="checkAnswer(this.getAttribute('data-parameter1'), 'D')" th:text="${'D. ' } + *{answerD}" th:value="${'D. ' } + *{answerD}"></button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="right">
+
+            <div class="lifeline-container">
+                <span id="fiftyStatus" class="invisible" th:text="${lifeline.isFifty()}"></span>
+                <span id="phoneStatus" class="invisible" th:text="${lifeline.isPhone()}"></span>
+                <span id="audienceStatus" class="invisible" th:text="${lifeline.isAudience()}"></span>
+                <img src="/img/fifty-fifty.png" class="lifeline" id="fiftyButton" th:data-parameter1="${question.correctAnswer}" onclick="doFifty(this.getAttribute('data-parameter1'))" />
+                <img src="/img/phone.png" class="lifeline" id="phoneButton" th:data-parameter1="${question.correctAnswer}" th:data-parameter2="${question.level}" onclick="callFriend(this.getAttribute('data-parameter1'), this.getAttribute('data-parameter2'))" />
+                <img src="/img/audience.png" class="lifeline" id="audienceButton" th:data-parameter1="${question.correctAnswer}" th:data-parameter2="${question.level}" onclick="askAudience(this.getAttribute('data-parameter1'), this.getAttribute('data-parameter2'))" />
+            </div>
+
+            <ul th:each="level : ${levels}">
+                <p class="normal" th:id= "${levelStat.count}" th:text="${level}"></p>
+            </ul>
+
+        <div class="endGameButtonContainer">
+            <form action="#" id="formFinish" method="post" th:action="@{/end}" th:object="${question}">
+                <button type="submit" class="endGameButton" id="playerEnd" name="playerEndGame" onclick="endGame()"><h1>Zakończ</h1></button>
+            </form>
+        </div>
+
+
+        </div>
+
+        <script>
+            checkLifelines();
+            highlightLevel();
+        </script>
+
+    </div>
+
+</body>
+</html>
