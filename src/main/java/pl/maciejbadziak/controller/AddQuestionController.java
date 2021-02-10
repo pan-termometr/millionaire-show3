@@ -19,12 +19,6 @@ public class AddQuestionController {
         this.questionRepository = questionRepository;
     }
 
-    @GetMapping
-    public String add(Model model) {
-        model.addAttribute("question", new Question());
-        return "addQuestion";
-    }
-
     @PostMapping("/add")
     public String addQuestion(Model model) {
         model.addAttribute("question", new Question());
