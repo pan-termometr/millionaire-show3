@@ -1,20 +1,13 @@
 const disabled = "disabled"
 const transparent = 'transparent'
 const guaranteed = 'guaranteed'
-const fifty = 'fifty'
-const fiftyStatus = 'fiftyStatus'
 const fiftyButton = 'fiftyButton'
-const phone = 'phone'
-const phoneStatus = 'phoneStatus'
 const phoneButton = 'phoneButton'
-const audience = 'audience'
-const audienceStatus = 'audienceStatus'
 const audienceButton = 'audienceButton'
 const playerEnd = 'playerEnd'
 const formFinish = 'formFinish'
 const opacity = '0.3'
 const opacity2 = '0.7'
-const used = 'used'
 const pink = 'pink'
 const answers = document.getElementsByName("playerAnswer");
 let disabledAnswer1;
@@ -35,8 +28,8 @@ function sleep(ms) {
 function checkAnswer(correctAnswer, playerAnswer) {
     const div = document.getElementById(playerAnswer);
     const correctDiv = document.getElementById(correctAnswer);
-    const greenColor = "rgba(35, 203, 167, 0.7)";
-    const redColor = "rgba(217, 30, 24, 0.7)";
+    const greenColor = "rgba(35,203,167,0.7)";
+    const redColor = "rgba(217,30,24,0.7)";
     blockButtons();
     opacityButtons(div);
         if (correctAnswer === playerAnswer) {
@@ -56,6 +49,7 @@ function opacityButtons(div){
     if (div.id !== "D")
         document.getElementById('D').style.opacity=opacity2;
 }
+
 function blockButtons() {
     $('#A').prop(disabled, true);
     $('#B').prop(disabled, true);
@@ -89,6 +83,7 @@ async function color(div, correctDiv, color, win) {
     }
 
 function sendFormLost() {
+    sessionStorage.clear();
     document.getElementById("form").action="/badAnswer";
     document.getElementById("form").submit();
 }
@@ -111,12 +106,13 @@ function highlightLevel() {
 }
 
 function endGame() {
+    sessionStorage.clear();
     document.getElementById(formFinish).submit();
 }
 
 function doFifty(correctAnswer) {
+    sessionStorage.setItem(fiftyButton, disabled);
     disableButton(fiftyButton);
-    changeStatus(fifty);
     chooseFifty(correctAnswer);
 }
 
@@ -156,8 +152,8 @@ function disableAnswer(randomDiv, i) {
 }
 
 function callFriend(correctAnswer, currentLevel) {
+    sessionStorage.setItem(phoneButton, disabled);
     disableButton(phoneButton);
-    changeStatus(phone);
     friendAnswer(correctAnswer, currentLevel);
 }
 
@@ -232,8 +228,8 @@ function getRandomDivFromFour(correctDiv) {
 }
 
 function askAudience(correctAnswer, currentLevel) {
+    sessionStorage.setItem(audienceButton, disabled);
     disableButton(audienceButton);
-    changeStatus(audience);
     audienceAnswer(correctAnswer, currentLevel)
 }
 
@@ -284,8 +280,6 @@ function getAudienceTwoRandomNumbersIfAnswerIsGood(level) {
         randomNumberForCorrectAnswer = Math.floor(Math.random() * (maximum - minimumValueOfCorrectAnswer + 1)) + minimumValueOfCorrectAnswer;
         randomOneNumberForOneBadAnswer = maximum - randomNumberForCorrectAnswer;
     } while (randomOneNumberForOneBadAnswer > randomNumberForCorrectAnswer)
-    console.log(randomNumberForCorrectAnswer);
-    console.log(randomOneNumberForOneBadAnswer);
 }
 
 function setGraphForAnswersIfFiftyWasUsed(correctAnswer) {
@@ -346,9 +340,10 @@ function getAudienceFourRandomNumbersIfAnswerIsGood(level) {
         do {
             randomAudienceNumbersForBadAnswer[1] = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
         } while (randomAudienceNumbersForBadAnswer[1] > randomNumberForCorrectAnswer);
-        maximum = maximum - randomAudienceNumbersForBadAnswer[0];
+        maximum = maximum - randomAudienceNumbersForBadAnswer[1];
         randomAudienceNumbersForBadAnswer[2] = maximum;
-    } while (randomAudienceNumbersForBadAnswer[2] > randomNumberForCorrectAnswer)
+
+    } while (randomAudienceNumbersForBadAnswer[2] > randomNumberForCorrectAnswer);
 }
 
 function setGraphForCorrectAnswer(correctAnswer) {
@@ -390,21 +385,18 @@ function setGraphForBadAnswer() {
 }
 
 function checkLifelines() {
-    checkButton(fiftyStatus, fiftyButton);
-    checkButton(phoneStatus, phoneButton);
-    checkButton(audienceStatus, audienceButton);
+    if (document.getElementById("currentLevel").value === '1') {
+        sessionStorage.clear();
+    }
+    checkButton(fiftyButton);
+    checkButton(phoneButton);
+    checkButton(audienceButton);
 }
 
-function checkButton(lifelineStatusId, buttonId) {
-    const element = document.getElementById(lifelineStatusId).textContent;
-    if (element==="false"){
+function checkButton(buttonId) {
+    if(sessionStorage.getItem(buttonId)===disabled) {
         disableButton(buttonId);
     }
-}
-
-function changeStatus(elementId) {
-    const element = document.getElementById(elementId);
-    element.value=used;
 }
 
 function disableButton(buttonId) {
@@ -413,3 +405,5 @@ function disableButton(buttonId) {
     button.disabled = true;
     button.onclick = '';
 }
+
+// fifty used true (ale tylko dla pytania)

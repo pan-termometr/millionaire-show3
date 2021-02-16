@@ -17,17 +17,12 @@ import java.util.Random;
 public class GameController {
 
     @Autowired
-    private Random random;
-    private final QuestionRepository questionRepository;
     private GameService gameService;
 
     @Autowired
-    public GameController(QuestionRepository questionRepository, GameService gameService) {
-        this.questionRepository = questionRepository;
+    public GameController(GameService gameService) {
         this.gameService = gameService;
     }
-
-
 
     @PostMapping("/game")
     String startGame(@ModelAttribute Question question, Model model,
@@ -47,6 +42,5 @@ public class GameController {
     String showGuaranteedPrize(@ModelAttribute Question question, Model model){
         return gameService.getGuaranteedPrice(model);
     }
-
 
 }
