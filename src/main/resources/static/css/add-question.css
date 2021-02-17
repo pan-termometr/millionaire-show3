@@ -18,9 +18,9 @@ h1, p {
 
 .center {
     width: 300px;
-    height: 380px;
+    height: auto;
     position:absolute;
-    top:50%;
+    top:40%;
     left:50%;
     margin-left:-150px;/* half width*/
     margin-top:-155px;/* half height*/
@@ -32,5 +32,5 @@ h1, p {
 
 .center-button {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
