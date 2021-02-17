@@ -11,4 +11,5 @@ public class Config {
     Random random() {
         return new Random();
     }
+
 }

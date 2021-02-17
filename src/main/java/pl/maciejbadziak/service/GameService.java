@@ -1,9 +1,12 @@
 package pl.maciejbadziak.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.context.WebApplicationContext;
 import pl.maciejbadziak.data.QuestionRepository;
 import pl.maciejbadziak.model.Lifeline;
 import pl.maciejbadziak.model.Question;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Scope(scopeName= WebApplicationContext.SCOPE_SESSION, proxyMode= ScopedProxyMode.TARGET_CLASS)
 public class GameService {
 
     @Autowired
@@ -32,6 +36,7 @@ public class GameService {
     int guaranteedLevel1 = 2;
     int guaranteedLevel2 = 8;
     int guaranteedMillion = 12;
+
 
     public String startNewGame(String ifNewGame, String lifelineFiftyStatus, String lifelinePhoneStatus, String lifelineAudienceStatus, Model model) {
         setNewGame(ifNewGame);
