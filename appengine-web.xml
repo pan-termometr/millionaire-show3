@@ -1,0 +1,4 @@
+<env-variables>
+    <env-var name="GOOGLE_APPLICATION_CREDENTIALS"
+             value="millionaire-ee3574c78394.json" />
+</env-variables>
